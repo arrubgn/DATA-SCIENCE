@@ -1,0 +1,94 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs48\lang9\par
+Introduction to the opportunity\fs22\par
+Fredericton is the Capital City of the only Canadian fully-bilingual Province of New Brunswick and is beautifully located on the banks of the Saint John River. While one of the least populated provincial capital cities with a population base of less than 60 thousand residents, it offers a wide spectrum of venues and is a governement, university and cultural hub.\par
+As the city grows and develops, it becomes increasingly important to examine and understand it quantitiatively. The City of Fredericton provides open data for everyone and encourages entrepreneurial use to develop services for the benefit of its ciitzens.\par
+Developers, investors, policy makers and/or city planners have an interest in answering the following questions as the need for additional services and citizen protection:\par
+What neighbourhoods have the highest crime?\par
+Is population density correlated to crime level?\par
+Using Foursquare data, what venues are most common in different locations within the city?\par
+Does the Knowledge Park really need a coffee shop?\par
+Does the Open Data project have specific enough or thick enough data to empower decisions to be made or is it too aggregate to provide value in its current detail? Let's find out.\par
+\par
+\fs48 Data\fs22\par
+To understand and explore we will need the following City of Fredericton Open Data:\par
+Open Data Site: {{\field{\*\fldinst{HYPERLINK http://data-fredericton.opendata.arcgis.com/ }}{\fldrslt{http://data-fredericton.opendata.arcgis.com/\ul0\cf0}}}}\f0\fs22\par
+Fredericton Neighbourhoods: {{\field{\*\fldinst{HYPERLINK http://data-fredericton.opendata.arcgis.com/datasets/neighbourhoods--quartiers }}{\fldrslt{http://data-fredericton.opendata.arcgis.com/datasets/neighbourhoods--quartiers\ul0\cf0}}}}\f0\fs22\par
+Fredericton Crime by Neighbourhood: {{\field{\*\fldinst{HYPERLINK http://data-fredericton.opendata.arcgis.com/datasets/crime-by-neighbourhood-2017--crime-par-quartier-2017 }}{\fldrslt{http://data-fredericton.opendata.arcgis.com/datasets/crime-by-neighbourhood-2017--crime-par-quartier-2017\ul0\cf0}}}}\f0\fs22\par
+Fredericton Census Tract Demographics: {{\field{\*\fldinst{HYPERLINK http://data-fredericton.opendata.arcgis.com/datasets/census-tract-demographics--donn%C3%A9es-d%C3%A9mographiques-du-secteur-de-recensement }}{\fldrslt{http://data-fredericton.opendata.arcgis.com/datasets/census-tract-demographics--donn%C3%A9es-d%C3%A9mographiques-du-secteur-de-recensement\ul0\cf0}}}}\f0\fs22\par
+Fredericton locations of interest: {{\field{\*\fldinst{HYPERLINK https://github.com/JasonLUrquhart/Applied-Data-Science-Capstone/blob/master/Fredericton%20Locations.xlsx }}{\fldrslt{https://github.com/JasonLUrquhart/Applied-Data-Science-Capstone/blob/master/Fredericton%20Locations.xlsx\ul0\cf0}}}}\f0\fs22\par
+Foursquare Developers Access to venue data: {{\field{\*\fldinst{HYPERLINK https://foursquare.com/ }}{\fldrslt{https://foursquare.com/\ul0\cf0}}}}\f0\fs22\par
+Using this data will allow exploration and examination to answer the questions. The neighbourhood data will enable us to properly group crime by neighbourhood. The Census data will enable us to then compare the population density to examine if areas of highest crime are also most densely populated. Fredericton locations of interest will then allow us to cluster and quantitatively understand the venues most common to that location.\par
+\par
+\fs48 Methodology\fs22\par
+All steps are referenced beleow in the Appendix: Analysis section.\par
+The methodology will include:\par
+Loading each data set\par
+Examine the crime frequency by neighbourhood\par
+Study the crime types and then pivot analysis of crime type frequency by neighbourhood\par
+Understand correlation between crimes and population density\par
+Perform k-means statisical analysis on venues by locations of interest based on findings from crimes and neighbourhood\par
+Determine which venues are most common statistically in the region of greatest crime count then in all other locations of interest.\par
+Determine if an area, such as the Knowledge Park needs a coffee shop.\par
+\fs48 Loading the data\fs22\par
+After loading the applicable libraries, the referenced geojson neighbourhood data was loaded from the City of Fredericton Open Data site. This dataset uses block polygon shape coordinates which are better for visualization and comparison. The City also uses Ward data but the Neighbourhood location data is more accurate and includes more details. The same type of dataset was then loaded for the population density from the Stats Canada Census tracts.\par
+The third dataset, an excel file, "Crime by Neighbourhood 2017" downloaded from the City of Fredericton Open Data site is found under the Public Safety domain. This dataset was then uploaded for the analysis. It's interesting to note the details of this dataset are aggregated by neighbourhood. It is not an exhaustive set by not including all crimes (violent offenses) nor specific location data of the crime but is referenced by neighbourhood.\par
+This means we can gain an understanding of the crime volume by type by area but not specific enough to understand the distribution properties. Valuable questions such as, "are these crimes occuring more often in a specific area and at a certain time by a specific demographic of people?" cannot be answered nor explored due to what is reasonably assumed to be personal and private information with associated legal risks.\par
+There is value to the city to explore the detailed crime data using data science to predict frequency, location, timing and conditions to best allocated resources for the benefit of its citizens and it's police force. However, human behaviour is complex requiring thick profile data by individual and the conditions surrounding the event(s). To be sufficient for reliable future prediction it would need to demonstrate validity, currency, reliability and sufficiency.\par
+\par
+\fs48 Exploring the data\fs22\par
+Exploring the count of crimes by neighbourhood gives us the first glimpse into the distribution.\par
+One note is the possibility neighbourhoods names could change at different times. The crime dataset did not mention which specific neighbourhood naming dataset it was using but we assumed the neighbourhood data provided aligned with the neighbourhoods used in the crime data. It may be beneficial for the City to note and timestamp neighbourhood naming in the future or simply reference with neighbourhood naming file it used for the crime dataset.\par
+An example of data errors: There was an error found in the naming of the neighbourhood "Platt". The neighbourhood data stated "Plat" while the crime data stated "Platt". Given the crime dataset was most simple to manipulate it was modified to "Plat". The true name of the neighbourhood is "Platt".\par
+\par
+\fs48 First Visualization of Crime\fs22\par
+Once the data was prepared, a choropleth map was created to view the crime count by neighbourhood. As expected the region of greatest crime count was found in the downtown and Platt neighbourhoods.\par
+Examining the crime types enables us to learn the most frequent occuring crimes which we then plot as a bar chart to see most frequenty type.\par
+Theft from motor vehicles is most prevalent in the same area as the most frequent crimes. It's interesting to note this area is mostly residential and most do not have garages. It would be interesting to further examine if surveillance is a deterant for motor vehicle crimes in the downtown core compared to low surveillance in the Platt neighbourhood.\par
+Examining 2nd most common crime given it is specific: theft from vehicles\par
+After exploring the pivot table showing Crime_Type by Neighbourhood, we drill into a specific type of crime, theft from vehicles and plot the choropleth map to see which area has the greatest frequency.\par
+Again, the Platt neighbourhood appears as the most frequent.\par
+Is this due to population density?\par
+Introducing the Census data to explore the correlation between crime frequency and population density.\par
+Visualising the population density enables us to determine that the Platt neighbourhood has lower correlation to crime frequency than I would have expected.\par
+It would be interesting to further study the Census data and if this captures the population that is renting or more temporary/transient poplution, given the City is a University hub.\par
+Look at specific locations to understand the connection to venues using Foursquare data\par
+Loading the "Fredericton Locations" data enables us to perform a statistical analysis on the most common venues by location.\par
+We might wonder if the prevalence of bars and clubs in the downtown region has something to do with the higher crime rate in the near Platt region.\par
+Plotting the latitude and longitude coordinates of the locations of interest onto the crime choropleth map enables us to now study the most common venues by using the Foursquare data.\par
+Analysing each Location\par
+Grouping rows by location and the mean of the frequency of occurance of each category we venue categories we study the top five most common venues.\par
+Putting this data into a pandas dataframe we can then determine the most common venues by location and plot onto a map.\par
+\par
+\fs48 Results\fs22\par
+The analysis enabled us to discover and describe visually and quantitatively:\line Neighbourhoods in Fredericton\par
+Crime freqency by neighbourhood\par
+Crime type frequency and statistics. The mean crime count in the City of Fredericton is 22.\par
+Crime type count by neighbourhood.\par
+Theft from motor vehicles is most prevalent in the same area as the most frequent crimes. It's interesting to note this area is mostly residential and most do not have garages. It would be interesting to further examine if surveillance is a deterant for motor vehicle crimes in the downtown core compared to low surveillance in the Platt neighbourhood.\par
+Motor Vehicle crimes less than $5000 analysis by neighbourhood and resulting statistics.\par
+The most common crime is Other Theft less than 5k followed by Motor Vehicle Theft less than 5k. There is a mean of 6 motor vehicle thefts less than 5k by neighbourhood in the City.\par
+That population density and resulting visual correlation is not strongly correlated to crime frequency. Causation for crime is not able to be determined given lack of open data specificity by individual and environment.\par
+Using k-menas, we were able to determine the top 10 most common venues within a 1 km radius of the centroid of the highest crime neighbourhood. The most common venues in the highest crime neighbourhood are coffee shops followed by Pubs and Bars.\par
+While, it is not valid, consistent, reliable or sufficient to assume a higher concentration of the combination of coffee shops, bars and clubs predicts the amount of crime occurance in the City of Fredericton, this may be a part of the model needed to be able to in the future.\par
+We were able to determine the top 10 most common venues by location of interest.\par
+Statisically, we determined there are no coffee shops within the Knowledge Park clusters.\par
+\par
+\fs48 Discussion and Recommendations\fs22\par
+The City of Fredericton Open Data enables us to gain an understanding of the crime volume by type by area but not specific enough to understand the distribution properties. Valuable questions such as, "are these crimes occuring more often in a specific area and at a certain time by a specific demographic of people?" cannot be answered nor explored due to what is reasonably assumed to be personal and private information with associated legal risks.\par
+There is value to the city to explore the detailed crime data using data science to predict frequency, location, timing and conditions to best allocated resources for the benefit of its citizens and it's police force. However, human behaviour is complex requiring thick profile data by individual and the conditions surrounding the event(s). To be sufficient for reliable future prediction it would need to demonstrate validity, currency, reliability and sufficiency.\par
+A note of caution is the possibility neighbourhoods names could change. The crime dataset did not mention which specific neighbourhood naming dataset it was using but we assumed the neighbourhood data provided aligned with the neighbourhoods used in the crime data. It may be beneficial for the City to note and timestamp neighbourhood naming in the future or simply reference with neighbourhood naming file it used for the crime dataset.\par
+Errors exist in the current open data. An error was found in the naming of the neighbourhood "Platt". The neighbourhood data stated "Plat" while the crime data stated "Platt". Given the crime dataset was most simple to manipulate it was modified to "Plat". The true name of the neighbourhood is "Platt".\par
+Theft from motor vehicles is most prevalent in the same area as the most frequent crimes. It is interesting to note this area is mostly residential and most do not have garages. It would be interesting to further examine if surveillance is a deterant for motor vehicle crimes in the downtown core compared to low surveillance in the Platt neighbourhood.\par
+It would be interesting to further study the Census data and if this captures the population that is renting or more temporary/transient poplution, given the City is a University hub.\par
+Given the findings of the top 10 most frequent venues by locations of interest, the Knowledge Park does not have Coffee Shops in the top 10 most common venues as determined from the Foursquare dataset. Given this area has the greatest concentration of stores and shops as venues, it would be safe to assume a coffee shop would be beneficial to the business community and the citizens of Fredericton.\par
+\par
+\fs48 Conclusion\fs22\par
+Using a combination of datasets from the City of Fredericton Open Data project and Foursquare venue data we were able to analyse, discover and describe neighbhourhoods, crime, population density and statistically describe quantitatively venues by locations of interest.\par
+While overall, the City of Fredericton Open Data is interesting, it misses the details required for true valued quantitiatve analysis and predictive analytics which would be most valued by investors and developers to make appropriate investments and to minimize risk.\par
+The Open Data project is a great start and empowers the need for a "Citizens Like Me" model to be developed where citizens of digital Fredericton are able to share their data as they wish for detailed analysis that enables the creation of valued services.\par
+\par
+}
+ 
